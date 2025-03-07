@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>त्योहारों का काउंटडाउन</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; }
+        .countdown { margin: 20px auto; padding: 20px; background: white; box-shadow: 0px 0px 10px #aaa; width: 300px; }
+        h2 { color: #333; }
+    h1{
+        animation-name:h1;
+        animation-duration:5s;
+        animation-iteration-count:infinite;
+    }
+    /* Keyframes - रंग बदलने वाला एनिमेशन */
+@keyframes h1 {
+  0%   { color: red; }
+  25%  { color: blue; }
+  50%  { color: yellow; }
+  60%  { background-color:aqua;
+  75%  { color: white; }
+  70%  {background-color:AFEEEE;
+  100% { color: black; }
+    
+}
+    </style>
+</head>
+<body>
+
+    <h1>islamic festivals contdown...</h1>
+
+    <div id="timers"></div>
+
+    <script>
+        // त्योहारों की सूची (नाम और तारीखें)
+        const festivals = {
+            "ईद-उल-फ़ित्र आने में दिन बाकी हैं": "2025-03-31",
+            "ईद-उल-अज़हा आने में दिन बाकी हैं": "2025-06-06",
+            "मुहर्रम आने में दिन बाकी हैं": "2025-06-26",
+            "ईद-ए-मिलाद-उन-नबी आने में दिन बाकी हैं": "2025-09-05",
+            "ग्यारहवीं शरीफ आने में दिन बाकी हैं": "2025-10-04",
+            "इमाम जाफ़र सादिक़ के कुंडे आने में दिन बाकी हैं": "2026-01-12",
+        };
+
+        let timersDiv = document.getElementById("timers");
+
+        // हर त्योहार के लिए HTML और काउंटडाउन बनाना
+        for (let [name, date] of Object.entries(festivals)) {
+            let countdownDiv = document.createElement("div");
+            countdownDiv.className = "countdown";
+            countdownDiv.innerHTML = `<h2>${name}</h2><p id="timer-${name}">लोड हो रहा है...</p>`;
+            timersDiv.appendChild(countdownDiv);
+
+            // काउंटडाउन फंक्शन
+            function startCountdown(festivalName, festivalDate) {
+                let targetDate = new Date(festivalDate + " 00:00:00").getTime();
+                
+                let x = setInterval(function() {
+                    let now = new Date().getTime();
+                    let distance = targetDate - now;
+
+                    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    document.getElementById("timer-" + festivalName).innerHTML = 
+                        days + " दिन " + hours + " घंटे " + minutes + " मिनट " + seconds + " सेकंड ";
+
+                    if (distance < 0) {
+                        clearInterval(x);
+                        document.getElementById("timer-" + festivalName).innerHTML = "आज " + festivalName + " है!";
+                    }
+                }, 1000);
+            }
+
+            startCountdown(name, date);
+        }
+    </script>
+    
+    
+
+</body>
+</html>
